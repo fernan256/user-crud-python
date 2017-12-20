@@ -1,4 +1,5 @@
 README
+
 This README covers the installation and using of this simple CURD for user management.
 
 What is this repository for?
