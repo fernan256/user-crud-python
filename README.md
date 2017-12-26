@@ -19,15 +19,27 @@
 
 **How do I get set up?**
 
-    Usage:
+    Install:
+        pip install virtualenv
+        pip install virtualenvwrapper
+        export WORKON_HOME=~/Envs
+        source /usr/local/bin/virtualenvwrapper.sh
 
-    Initialize the docker container.
-    Run: python app.py
-    Run: go to localhost:8080
+    Create the virtual environment:
+        mkvirtualenv my-venv
+        workon my-venv
+
+    Configuration variables:
+        export FLASK_CONFIG=development
+        export FLASK_APP=run.py
+        
+    Run the application
+        flask run
+
+    Run de my-venv once it's created:
+        source ~/Envs/bin/activate
 
     Database configuration
-
-    Install MariaDB.
 
     Run the db installation to create the user database with the corresponding tables.
 
@@ -38,6 +50,18 @@
     Dependencies
     How to run tests
     Deployment instructions
+
+**Directory structure**
+
+    ├── user-crud-python
+       ├── app
+       │   ├── __init__.py
+       │   ├── templates
+       │   ├── models.py
+       │   └── views.py
+       ├── config.py
+       ├── requirements.txt
+       └── run.py
 
 **Contribution guidelines**
 
