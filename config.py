@@ -7,6 +7,8 @@ class Config(object):
     """
 
     # Any configuration that is common across all environments
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = True
 
 
 class DevelopmentConfig(Config):
@@ -14,7 +16,6 @@ class DevelopmentConfig(Config):
     Development configurations
     """
 
-    DEBUG= True
     SQLALCHEMY_ECHO = True
 
 
