@@ -1,9 +1,16 @@
 # models.py
 
+import os
+
 from flask import Flask
-from app import db
 from flask_marshmallow import Marshmallow
 
+config_name = os.getenv('FLASK_CONFIG')
+
+if config_name == 'development':
+    from .. app import db
+elif config_name == 'testing':
+    from app import db
 
 app = Flask(__name__)
 ma = Marshmallow(app)
@@ -27,10 +34,11 @@ class User(db.Model):
     age = db.Column(db.Integer, index=True)
     phone_number = db.Column(db.Integer, index=True)
 
-    def __repr__(self):
-        return '<User: {}>'.format(self.first_name)
-
 
 class UserSchema(ma.ModelSchema):
     class Meta:
-        model = User
+        """
+        Fields to expose
+
+        """
+        fields = ('id', 'email', 'first_name', 'last_name', 'age', 'phone_number')
