@@ -7,15 +7,13 @@
     
     Restful API for user CRUD.
     
-    Version 0.0.1
+    Version 1.0.0
 
 **Installation**
 
     Linux installation:
-        install mysql-server, python2.7
+        install mysql-server, python2.7, mysql-community edition
         
-    Docker installation:
-        sudo apt install docker
 
 **Database configuration and migration**
     
