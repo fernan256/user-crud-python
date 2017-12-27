@@ -1,75 +1,119 @@
 **README**
 
-    This README covers the installation and using of this simple CURD for user management.
+    This README covers the installation and using of this RestFul API. A User CRUD. With this API you'll be abel to 
+    create, list all users, show users by id, delete user, update user features individualy.
 
 **What is this repository for?**
     
-    Manage user.
+    Restful API for user CRUD.
+    
     Version 0.0.1
 
 **Installation**
 
     Linux installation:
+        install mysql-server, python2.7
+        
+    Docker installation:
+        sudo apt install docker
 
-    First: install docker and import the docker container in this repo
+**Database configuration and migration**
+    
+    Create user and databes that we will use in the instance/config.py:
+    
+        $ mysql -u root -p
+        
+        mysql> CREATE USER '<user_name>'@'localhost' IDENTIFIED BY '<password>';
+        
+        mysql> CREATE DATABASE users_db;
+        
+        mysql> GRANT ALL PRIVILEGES ON users_db . * TO '<user_name>'@'localhost';
+        
+    For migrate the models use:
+        
+        $ flask db init
+        
+        $ flask db migrate
+        
+        $ flask db upgrade
+    
+    For testtin, create the corresponding database:
+    
+        $ mysql -u root -p
+        
+        mysql> CREATE DATABASE users_test_db;
+        
+        mysql> GRANT ALL PRIVILEGES ON users_db . * TO '<user_name>'@'localhost';
+    
+**Setup URI database config file**
 
-    MariaDB -> sudo apt-get update sudo apt-get install postgresql postgresql-contrib sudo apt-get install postgresql-plpython3-9.5 (Para poder ejecutar los queries que tiene python- Si no larga error de que no existe plpython3)
+    Create a directory and a file instance/config.py
+        
+        Inside of that put this:
+            # instance/config.py
 
-    Install -> python 3.6, flask
+            import os
 
+            config_name = os.getenv('FLASK_CONFIG')
+
+            if config_name == 'development':
+                SQLALCHEMY_DATABASE_URI = 'mysql://<userName>:<pass>@localhost/users_db'
+            elif config_name == 'testing':
+                SQLALCHEMY_DATABASE_URI = 'mysql://<userName>:<pass>@localhost/user_test_db'
+        
 **How do I get set up?**
+     
+     Fisrt install:
+        $ pip install virtualenv
+        $ pip install virtualenvwrapper
+        
+        $ export WORKON_HOME=~/Envs
+        $ source /usr/local/bin/virtualenvwrapper.sh
+        
+        $ pip install requirements.txt
+     
+     Create the virtual environment:
+        $ mkvirtualenv my-venv
+        $ workon my-venv
 
-    Install:
-        pip install virtualenv
-        pip install virtualenvwrapper
-        export WORKON_HOME=~/Envs
-        source /usr/local/bin/virtualenvwrapper.sh
+        
+     Run the application
+        $ flask run
 
-    Create the virtual environment:
-        mkvirtualenv my-venv
-        workon my-venv
+     Run de my-venv once it's created:
+        $ source ~/Envs/bin/activate
+        
+**Configuration**
 
     Configuration variables:
-        export FLASK_CONFIG=development
-        export FLASK_APP=run.py
+        $ export FLASK_CONFIG=development
+        $ export FLASK_APP=run.py
         
-    Run the application
-        flask run
+    For testing:
+        $ export FLASK_CONFIG=testing
 
-    Run de my-venv once it's created:
-        source ~/Envs/bin/activate
-
-    Database configuration
-
-    Run the db installation to create the user database with the corresponding tables.
-
-    Edit the env file with your user and password.
+**How to run tests**
     
-    Summary of set up
-    Configuration
-    Dependencies
-    How to run tests
-    Deployment instructions
+    Run test:
+        $ export FLASK_CONFIG=testing
+        
+        $ python test.py
 
-**Directory structure**
+**Organization / Structure**
 
-    ├── user-crud-python
-       ├── app
-       │   ├── __init__.py
-       │   ├── templates
-       │   ├── models.py
-       │   └── views.py
-       ├── config.py
-       ├── requirements.txt
-       └── run.py
-
-**Contribution guidelines**
-
-    Writing tests
-    Code review
-    Other guidelines
+    ├── app              # All code related to the running of the app
+    │   ├── __init__.py  # All app-wide setup, and endpoints. Called by `run.py`
+    │   └── models       # Models
+    │
+    ├── instance
+    │   └── config.py    # Database URI and secret password
+    ├── migrations       # Directory with migraton configurations
+    ├── config           # Configuration files
+    ├── seeds.py         # Used for non-Vagrant local Development
+    ├── run.py           # Runs the app!
+    └── test.py          # Unit tests
 
 **Who do I talk to?**
 
-    Repo owner or admin
-    Other community or team contact
+    Diego Mayorga
+    diego.mayorga86@gmail.com
