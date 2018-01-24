@@ -68,7 +68,7 @@ def create_app(config_name):
             exist = db.session.query(exists().where(User.email == data['email'])).scalar()
 
             if exist is True:
-                return jsonify({'message': 'pet is already stored'}), 404
+                return jsonify({'message': 'The user already exist'}), 404
             else:
                 user.email = data['email']
                 user.first_name = data['first_name']
@@ -99,7 +99,7 @@ def create_app(config_name):
             user = User.query.get(id)
 
             if user is None:
-                return jsonify({'message': 'pet is already stored'}), 404
+                return jsonify({'message': 'There is no user with the provided id'}), 404
 
             else:
                 user.email = data['email']
